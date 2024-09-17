@@ -75,6 +75,8 @@ void loop() {
   }
   if (PS4.Left()) {
     motor5.run(64, 1);
+  }else{
+    motor5.run(0,0);
   }
 
   if (PS4.PSButton()) {
