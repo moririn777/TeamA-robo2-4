@@ -37,7 +37,7 @@ void setup() {
 
 void loop() {
 
-  bool isOnRearSwitch = digitalRead(SW_FRONT_PIN);
+  bool isOnFrontSwitch = digitalRead(SW_FRONT_PIN);
   bool isOnRearSwitch = digitalRead(SW_REAR_PIN);
 
 
