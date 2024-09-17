@@ -40,7 +40,8 @@ void loop() {
 
   if (!PS4.isConnected()) {
     Serial.printf("PS4 controller disconnected.\n");
-    stopMotor();
+    motor1.run(0, 0);
+    motor2.run(0, 0);
     return;
   }
 
@@ -82,10 +83,4 @@ void loop() {
   if (PS4.PSButton()) {
     ESP.restart();
   }
-}
-
-/* STOP MOVING */
-void stopMotor() {
-  motor1.run(0, 0);
-  motor2.run(0, 0);
 }
