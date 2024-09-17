@@ -48,13 +48,18 @@ void loop() {
   }
 
   if (DEAD_ZONE <= abs(PS4.RStickY())) {
-    motor1.run(abs(PS4.RStickY()), (PS4.RStickY() > 0 ? 0 : 1)); // 右モーター
+    int pwr = abs(PS4.RStickY());
+    bool dir = PS4.RStickY() > 0 ? 0 : 1;
+    motor1.run(pwr, dir); // 右モーター
+  }else{
+    motor1.run(0,0);
   }
   if (DEAD_ZONE <= abs(PS4.LStickY())) {
-    motor2.run(abs(PS4.LStickY()), (PS4.LStickY() > 0 ? 0 : 1)); // 左モーター
-  }
-  if (DEAD_ZONE > abs(PS4.LStickY()) && DEAD_ZONE > abs(PS4.RStickY())) {
-    stopMotor();
+    int pwr = abs(PS4.LStickY());
+    bool dir = PS4.LStickY() > 0 ? 0 : 1;
+    motor1.run(pwr, dir);  // 左モーター
+  }else{
+    motor2.run(0,0);
   }
 
   if (PS4.R2Value() > 15) {
