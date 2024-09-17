@@ -16,9 +16,6 @@ Motor motor5(14, 17, 5);
 const int SW_FRONT_PIN = 33;
 const int SW_REAR_PIN = 32;
 
-/* MOTOR FUNCTION */
-void stopMotor();
-
 void setup() {
   Serial.begin(115200);
 
