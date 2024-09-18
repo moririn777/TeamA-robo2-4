@@ -40,7 +40,6 @@ void loop() {
   bool isOnFrontSwitch = digitalRead(SW_FRONT_PIN);
   bool isOnRearSwitch = digitalRead(SW_REAR_PIN);
 
-
   if (!PS4.isConnected()) {
     Serial.printf("PS4 controller disconnected.\n");
     stopMotor();
@@ -72,9 +71,10 @@ void loop() {
 
   if (PS4.Right()) {
     motor5.run(64, 0);
-  }
-  if (PS4.Left()) {
+  } else if (PS4.Left()) {
     motor5.run(64, 1);
+  } else {
+    motor5.run(0, 0);
   }
 
   if (PS4.PSButton()) {
