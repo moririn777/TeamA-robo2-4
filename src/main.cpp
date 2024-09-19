@@ -9,12 +9,12 @@ const int DEAD_ZONE = 30;
 Motor motor1(32, 22, 1);
 Motor motor2(33, 21, 2);
 Motor motor3(25, 19, 3);
-Motor motor4(26, 28, 4);
+Motor motor4(26, 18, 4);
 Motor motor5(14, 17, 5);
 
 /*switch*/
-const int SW_FRONT_PIN = 33;
-const int SW_REAR_PIN = 32;
+const int SW_FRONT_PIN = 23;
+const int SW_REAR_PIN = 34;
 
 void setup() {
   Serial.begin(115200);
@@ -25,7 +25,7 @@ void setup() {
                 bt_mac[0], bt_mac[1], bt_mac[2], bt_mac[3], bt_mac[4],
                 bt_mac[5]);
 
-  PS4.begin("08:B6:1F:ED:4f:4E");
+  PS4.begin("08:D1:F9:37:41:F2");
   Serial.printf("ready.\n");
 
   pinMode(SW_FRONT_PIN, INPUT_PULLDOWN);
@@ -41,6 +41,9 @@ void loop() {
     Serial.printf("PS4 controller disconnected.\n");
     motor1.run(0, 0);
     motor2.run(0, 0);
+    motor3.run(0, 0);
+    motor4.run(0, 0);
+    motor5.run(0, 0);
     return;
   }
 
@@ -48,15 +51,15 @@ void loop() {
     int pwr = abs(PS4.RStickY());
     bool dir = PS4.RStickY() > 0 ? 0 : 1;
     motor1.run(pwr, dir); // 右モーター
-  }else{
-    motor1.run(0,0);
+  } else {
+    motor1.run(0, 0);
   }
   if (DEAD_ZONE <= abs(PS4.LStickY())) {
     int pwr = abs(PS4.LStickY());
-    bool dir = PS4.LStickY() > 0 ? 0 : 1;
-    motor1.run(pwr, dir);  // 左モーター
-  }else{
-    motor2.run(0,0);
+    bool dir = PS4.LStickY() > 0 ? 1 : 0;
+    motor2.run(pwr, dir); // 左モーター
+  } else {
+    motor2.run(0, 0);
   }
 
   if (PS4.R2Value() > 15) {
@@ -72,9 +75,9 @@ void loop() {
     motor4.run(0, 0);
   }
 
-  if (PS4.Right()) {
+  if (PS4.Right() && !isOnFrontSwitch) {
     motor5.run(64, 0);
-  } else if (PS4.Left()) {
+  } else if (PS4.Left() && !isOnRearSwitch) {
     motor5.run(64, 1);
   } else {
     motor5.run(0, 0);
